@@ -146,8 +146,10 @@ export default Component.extend({
     let dropdown = this.get('dropdown');
     this.triggerElement = this.triggerElement || document.querySelector(`[data-ebd-id=${dropdown.uniqueId}-trigger]`);
     this.dropdownElement = document.getElementById(this.dropdownId);
-    const rootEventType = this.get('rootEventType');
-    document.addEventListener(rootEventType, this.handleRootMouseDown, true);
+    if (this.get('rootEventType')) {
+      const rootEventType = this.get('rootEventType');
+      document.addEventListener(rootEventType, this.handleRootMouseDown, true);
+    }
 
     if (this.get('isTouchDevice')) {
       document.addEventListener('touchstart', this.touchStartHandler, true);
@@ -363,8 +365,10 @@ export default Component.extend({
     this.scrollableAncestors = [];
     this.stopObservingDomMutations();
 
-    const rootEventType = this.get('rootEventType');
-    document.removeEventListener(rootEventType, this.handleRootMouseDown, true);
+    if (this.get('rootEventType')) {
+      const rootEventType = this.get('rootEventType');
+      document.removeEventListener(rootEventType, this.handleRootMouseDown, true);
+    }
 
     if (this.get('isTouchDevice')) {
       document.removeEventListener('touchstart', this.touchStartHandler, true);
